@@ -1,9 +1,11 @@
+![Alt text](image.png)
+
 # Gestionnaire de proxy
 
 Ce script Bash permet de gérer les configurations de proxy sur votre système. Il offre les fonctionnalités suivantes :
 
 ## Créateur
-Créé par Malack_Key.
+Créé par Ange Tia.
 
 ## Fonctionnalités
 - **Afficher les configurations proxy existantes** : Affiche les configurations actuelles des proxies HTTP, HTTPS et FTP.
