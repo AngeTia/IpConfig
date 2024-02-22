@@ -1,4 +1,4 @@
-![Alt text](image.png)
+![Alt text](proxy.png)
 
 # Gestionnaire de proxy
 
