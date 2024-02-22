@@ -9,13 +9,18 @@ echo "================================================="
 display_proxy_configurations() {
     echo -e "\e[92mConfiguration actuelle du proxy dans /etc/bash.bashrc :\e[0m"
     echo "---------------------------------"
-    grep -E 'http_proxy|https_proxy|ftp_proxy' "/etc/bash.bashrc"
+    grep -m 3 -E 'http_proxy|https_proxy|ftp_proxy' "/etc/bash.bashrc"
     echo -e "\e[94m####################################################\e[0m"
     echo -e "\e[92mConfiguration actuelle du gestionnaire de paquet apt dans /etc/apt/apt.conf :\e[0m"
     echo "---------------------------------"
     echo "---------------------------------"
     cat "/etc/apt/apt.conf"
 
+    # Afficher les configurations proxy de Git
+    echo -e "\e[92mConfiguration actuelle des proxys Git :\e[0m"
+    echo "---------------------------------"
+    git config --global --get-regexp http\.proxy
+    git config --global --get-regexp https\.proxy
 }
 
 # Fonction pour ajouter une nouvelle configuration de proxy
@@ -31,6 +36,9 @@ add_proxy_configuration() {
     echo "export ftp_proxy=\"http://$proxy_ip:$proxy_port\"" | sudo tee -a /etc/bash.bashrc
     echo "Acquire::http::Proxy \"http://$proxy_ip:$proxy_port\";" | sudo tee /etc/apt/apt.conf
 
+    sudo git config --global http.proxy "http://$proxy_ip:$proxy_port"
+    sudo git config --global https.proxy "http://$proxy_ip:$proxy_port"
+
     echo "La configuration du proxy a été ajoutée."
 }
 
@@ -44,6 +52,9 @@ remove_proxy_configuration() {
     unset http_proxy
     unset https_proxy
     unset ftp_proxy
+
+    sudo git config --global --unset http.proxy
+    sudo git config --global --unset https.proxy
 
     echo "La configuration du proxy a été supprimée."
 }
